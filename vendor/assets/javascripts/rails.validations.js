@@ -629,7 +629,11 @@
 
   $(function() {
     ClientSideValidations.disableValidators();
-    return $(ClientSideValidations.selectors.forms).validate();
+    window.setTimeout( function(){
+      if(ClientSideValidations.selectors.forms){
+        $(ClientSideValidations.selectors.forms).validate();
+      }
+    }, 1);
   });
 
 }).call(this);
