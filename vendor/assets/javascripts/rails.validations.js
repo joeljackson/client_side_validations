@@ -115,7 +115,11 @@
   };
 
   $(function() {
-    return $(ClientSideValidations.selectors.forms).validate();
+    window.setTimeout( function(){
+      if(ClientSideValidations.selectors.forms){
+        return $(ClientSideValidations.selectors.forms).validate();
+      }
+    }, 1);
   });
 
   if (window.ClientSideValidations === void 0) {
