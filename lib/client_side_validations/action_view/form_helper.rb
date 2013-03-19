@@ -24,6 +24,7 @@ module ClientSideValidations::ActionView::Helpers
       html_id = options[:html][:id] if options[:html]
       form   = super(record, *(args << options), &proc)
       options[:id] = html_id if html_id
+      @validators = options[:validators] if options[:validators]
       script = client_side_form_settings(object, options)
 
       # Because of the load order requirement above this sub is necessary
