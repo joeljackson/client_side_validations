@@ -550,7 +550,7 @@
 
   window.ClientSideValidations.disableValidators = function() {
     var func, validator, _ref, _results;
-    if (window.ClientSideValidations.disabled_validators === void 0) {
+    if (window.ClientSideValidations.disabled_validators === void 0 || window.ClientSideValidations.disabled_validators.indexOf === void 0) {
       return;
     }
     _ref = window.ClientSideValidations.validators.remote;
@@ -608,6 +608,8 @@
     numericality: /^(-|\+)?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d*)?$/
   };
 
+  window.ClientSideValidations.has_validated = [];
+
   window.ClientSideValidations.callbacks = {
     element: {
       after: function(element, eventData) {},
@@ -629,11 +631,14 @@
 
   $(function() {
     ClientSideValidations.disableValidators();
-    window.setTimeout( function(){
-      if(ClientSideValidations.selectors.forms){
-        $(ClientSideValidations.selectors.forms).validate();
-      }
-    }, 1);
+    if(ClientSideValidations.selectors.forms){
+      $(ClientSideValidations.selectors.forms).each( function(){
+        if(_.indexOf(ClientSideValidations.has_validated, this.id) == -1 ){
+          ClientSideValidations.has_validated.push(this.id);
+          $(this).validate();
+        }
+      });
+    }
   });
 
 }).call(this);
