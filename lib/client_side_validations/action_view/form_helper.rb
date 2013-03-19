@@ -23,6 +23,7 @@ module ClientSideValidations::ActionView::Helpers
       # Order matters here. Rails mutates the options object
       html_id = options[:html][:id] if options[:html]
       form   = super(record, *(args << options), &proc)
+      @validators = options[:validators] if options[:validators]
       options[:id] = html_id if html_id
       script = client_side_form_settings(object, options)
 
